@@ -754,7 +754,6 @@ E:\libs>tree /F
 └─lib
         glew32.dll
         glew32.lib
-        glew32s.lib
         glfw3.lib
         soil2.lib
         soil2.pdb
@@ -763,3 +762,27 @@ E:\libs>tree /F
 
 ### Configurate the Visual Studio project to run the first sample
 
+- Start the Visual Studio 2026
+- Create the solution that Empty Project with c++.
+- Place the main.cpp with the code below:
+
+```cpp
+#include <iostream>
+
+int main() {
+    std::cout << "Hello, World!" << std::endl;
+    return 0;
+}
+
+```
+
+- build and run the project, make sure everything is ok.
+- In "debug" mode, go into "project properties" and make the following chagnes:
+  - Under "c/c++" -> "General" -> "Addition include Directories", add add **include** folder you created previously.
+  - Under "Linker" -> "General" -> "Addition Library Directories", and add the **lib** folder you created previously.
+  - Under "Linker" -> "Input" -> "Addition Dependencies", and add the following filenames: **glew32.lib\nglfw3.lib\nsoil2.lib\nopengl32.lib**, each filename one line.
+- Copy the glew32.dll to your project root folder.
+- change the main.cpp to program 2.1 in page 10 of the book.
+- make sure you can build and run the project.
+
+**Good lucky!**
