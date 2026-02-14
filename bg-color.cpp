@@ -4,9 +4,9 @@
 
 using namespace std;
 
-void init(GLFWwindow* window) {}
+void bg_color_init(GLFWwindow* window) {}
 
-void display(GLFWwindow* window, double currentTime) {
+void bg_color_display(GLFWwindow* window, double currentTime) {
 	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 }
@@ -35,10 +35,10 @@ int bg_color_main() {
 		return -1;
 	}
 
-	init(window);
+	bg_color_init(window);
 
 	while (!glfwWindowShouldClose(window)) {
-		display(window, glfwGetTime());
+		bg_color_display(window, glfwGetTime());
 		glfwSwapBuffers(window);
 		glfwPollEvents();
 	}
