@@ -1,10 +1,20 @@
 
+#include "QApp.h"
 
-int bg_color_main();
+
 int point_main();
 
+QRunnable bg_color_runnable();
+
+int demo_main(QRunnable runnable ) {
+	QApp app(runnable);
+	if (int ret = app.Init(); ret != 0) {
+		return ret;
+	}
+	return app.Run();
+}
+
 int main() {
-	//return bg_color_main();
-	return point_main();
+	return demo_main(bg_color_runnable());
 }
 

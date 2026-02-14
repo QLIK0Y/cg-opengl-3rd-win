@@ -133,6 +133,11 @@
     <ClCompile Include="bg-color.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="point.cpp" />
+    <ClCompile Include="QApp.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QApp.h" />
+    <ClInclude Include="QRunnable.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

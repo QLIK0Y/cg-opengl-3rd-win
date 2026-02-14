@@ -24,5 +24,16 @@
     <ClCompile Include="point.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QApp.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="QApp.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QRunnable.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>
