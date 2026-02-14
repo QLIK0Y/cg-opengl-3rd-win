@@ -1,8 +1,5 @@
 
-#include <iostream>
 #include "QRunnable.h"
-
-using namespace std;
 
 void bg_color_display(GLFWwindow* window, double currentTime) {
 	glClearColor(1.0f, 0.0f, 1.0f, 1.0f);

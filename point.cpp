@@ -1,8 +1,6 @@
-#include <GL/glew.h>
-#include <GLFW/glfw3.h>
-#include <iostream>
 
-using namespace std;
+#include "QRunnable.h"
+
 
 #define numVAOs 1
 
@@ -42,10 +40,12 @@ GLuint createShaderProgram() {
 	return vfProgram;
 }
 
-void point_init(GLFWwindow* window) {
+int point_init(GLFWwindow* window) {
 	renderingProgram = createShaderProgram();
 	glGenVertexArrays(numVAOs, vao);
 	glBindVertexArray(vao[0]);
+
+	return 0;
 }
 
 void point_display(GLFWwindow* window, double currentTime) {
@@ -54,40 +54,6 @@ void point_display(GLFWwindow* window, double currentTime) {
 	glDrawArrays(GL_POINTS, 0, 1);
 }
 
-int point_main() {
-	if (!glfwInit()) {
-		cerr << "Failed to initialize GLFW" << endl;
-		return -1;
-	}
-
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-	glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
-
-	GLFWwindow* window = glfwCreateWindow(800, 600, "Chapter2 - program1", nullptr, nullptr);
-	if (!window) {
-		cerr << "Failed to create GLFW window" << endl;
-		glfwTerminate();
-		return -1;
-	}
-
-	glfwMakeContextCurrent(window);
-	if (glewInit() != GLEW_OK) {
-		cerr << "Failed to initialize GLEW" << endl;
-		glfwDestroyWindow(window);
-		glfwTerminate();
-		return -1;
-	}
-
-	point_init(window);
-
-	while (!glfwWindowShouldClose(window)) {
-		point_display(window, glfwGetTime());
-		glfwSwapBuffers(window);
-		glfwPollEvents();
-	}
-
-	glfwDestroyWindow(window);
-	glfwTerminate();
-	return 0;
+QRunnable point_runnable() {
+	return QRunnable(point_display, "Chapter2 - program2", point_init);
 }
-
