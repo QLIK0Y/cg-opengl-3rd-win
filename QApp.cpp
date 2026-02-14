@@ -1,5 +1,5 @@
 
-#include <GL/glew.h>
+
 #include "QApp.h"
 
 #include <iostream>
