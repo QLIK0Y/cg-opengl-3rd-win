@@ -2,14 +2,11 @@
 #include "QRunnable.h"
 #include "QProgram.h"
 
-#include <iostream>
-using namespace std;
-
-
+// VAO : Vertex Array Object
 #define numVAOs 1
+GLuint vao[numVAOs];
 
 QProgram *renderingProgram = nullptr;
-GLuint vao[numVAOs];
 
 void createShaderProgram() {
 	const char* vshaderSource = R"(
@@ -28,12 +25,7 @@ void createShaderProgram() {
 		}
 	)";
 
-	QShader vShader(GL_VERTEX_SHADER, vshaderSource);
-	QShader fShader(GL_FRAGMENT_SHADER, fshaderSource);
-
-	//QProgram vfProgram(vShader, fShader);
-
-	renderingProgram = new QProgram(vShader, fShader);
+	renderingProgram = new QProgram(vshaderSource, fshaderSource);
 }
 
 int point_init(GLFWwindow* window) {
@@ -51,7 +43,6 @@ void destroyShaderProgram() {
 }
 
 void point_deinit() {
-	cout << "point_deinit..." << endl;
 	destroyShaderProgram();
 }
 

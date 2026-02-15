@@ -6,6 +6,13 @@ class QProgram {
 public:
 	//QProgram() = default;
 
+	QProgram(const char* vshaderSource, const char* fshaderSource) {
+		QShader vShader(GL_VERTEX_SHADER, vshaderSource);
+		QShader fShader(GL_FRAGMENT_SHADER, fshaderSource);
+
+		this->QProgram::QProgram(vShader, fShader);
+	}
+
 	QProgram(QShader& vertexShader, QShader& fragmentShader) {
 		m_program = glCreateProgram();
 
