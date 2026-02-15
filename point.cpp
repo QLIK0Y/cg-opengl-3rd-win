@@ -1,13 +1,17 @@
 
 #include "QRunnable.h"
+#include "QProgram.h"
+
+#include <iostream>
+using namespace std;
 
 
 #define numVAOs 1
 
-GLuint renderingProgram;
+QProgram renderingProgram;
 GLuint vao[numVAOs];
 
-GLuint createShaderProgram() {
+QProgram createShaderProgram() {
 	const char* vshaderSource = R"(
 		#version 430
 		void main(void)
@@ -24,24 +28,17 @@ GLuint createShaderProgram() {
 		}
 	)";
 
-	GLuint vShader = glCreateShader(GL_VERTEX_SHADER);
-	glShaderSource(vShader, 1, &vshaderSource, nullptr);
-	glCompileShader(vShader);
+	QShader vShader(GL_VERTEX_SHADER, vshaderSource);
+	QShader fShader(GL_FRAGMENT_SHADER, fshaderSource);
 
-	GLuint fShader = glCreateShader(GL_FRAGMENT_SHADER);
-	glShaderSource(fShader, 1, &fshaderSource, nullptr);
-	glCompileShader(fShader);
-
-	GLuint vfProgram = glCreateProgram();
-	glAttachShader(vfProgram, vShader);
-	glAttachShader(vfProgram, fShader);
-	glLinkProgram(vfProgram);
+	QProgram vfProgram(vShader, fShader);
 
 	return vfProgram;
 }
 
 int point_init(GLFWwindow* window) {
 	renderingProgram = createShaderProgram();
+
 	glGenVertexArrays(numVAOs, vao);
 	glBindVertexArray(vao[0]);
 
@@ -49,7 +46,7 @@ int point_init(GLFWwindow* window) {
 }
 
 void point_display(GLFWwindow* window, double currentTime) {
-	glUseProgram(renderingProgram);
+	renderingProgram.Use();
 	glPointSize(40.0f);
 	glDrawArrays(GL_POINTS, 0, 1);
 }

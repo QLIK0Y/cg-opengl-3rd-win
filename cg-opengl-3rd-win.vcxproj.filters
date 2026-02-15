@@ -35,5 +35,11 @@
     <ClInclude Include="QRunnable.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QShader.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
 </Project>

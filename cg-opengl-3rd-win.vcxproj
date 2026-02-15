@@ -139,7 +139,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QApp.h" />
+    <ClInclude Include="QProgram.h" />
     <ClInclude Include="QRunnable.h" />
+    <ClInclude Include="QShader.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
