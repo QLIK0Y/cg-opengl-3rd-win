@@ -787,10 +787,10 @@ int main() {
 
 **Good lucky!**
 
-
 ## How to build the project in your local machine
 
 ### set the environment variable
+
 - Open the "Edit the environment variables for current user" in the start menu.
 - Add a new user variable named "CG_OPENGL_3RD_WIN_LIBS_PATH" with the value of the path to the folder where you put the include and lib, for example: C:\libs.
 - Save the changes and start the Visual Studio 2026.
