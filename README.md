@@ -780,9 +780,19 @@ int main() {
 - In "debug" mode, go into "project properties" and make the following chagnes:
   - Under "c/c++" -> "General" -> "Addition include Directories", add add **include** folder you created previously.
   - Under "Linker" -> "General" -> "Addition Library Directories", and add the **lib** folder you created previously.
-  - Under "Linker" -> "Input" -> "Addition Dependencies", and add the following filenames: **glew32.lib\nglfw3.lib\nsoil2.lib\nopengl32.lib**, each filename one line.
+  - Under "Linker" -> "Input" -> "Addition Dependencies", and add the following filenames: **glew32.lib**\ng**lfw3.lib**\n**soil2.lib**\n**opengl32.lib**, each filename one line.
 - Copy the glew32.dll to your project root folder.
 - change the main.cpp to program 2.1 in page 10 of the book.
 - make sure you can build and run the project.
 
 **Good lucky!**
+
+
+## How to build the project in your local machine
+
+### set the environment variable
+- Open the "Edit the environment variables for current user" in the start menu.
+- Add a new user variable named "CG_OPENGL_3RD_WIN_LIBS_PATH" with the value of the path to the folder where you put the include and lib, for example: C:\libs.
+- Save the changes and start the Visual Studio 2026.
+- Copy the glew32.dll to your project root folder.
+- Then trigger build action, and you should be able to build and run the project successfully.
