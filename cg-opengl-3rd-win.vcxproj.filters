@@ -27,6 +27,15 @@
     <ClCompile Include="QApp.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="QGLTool.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QShader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QProgram.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QApp.h">
@@ -39,6 +48,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="QProgram.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QGLTool.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
