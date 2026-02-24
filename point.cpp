@@ -1,6 +1,8 @@
 
 #include "QRunnable.h"
 #include "QProgram.h"
+#include <iostream>
+using namespace std;
 
 // VAO : Vertex Array Object
 #define numVAOs 1
@@ -8,7 +10,7 @@ GLuint vao[numVAOs];
 
 QProgram *renderingProgram = nullptr;
 
-void createShaderProgram() {
+bool createShaderProgram() {
 	const char* vshaderSource = R"(
 		#version 430
 		void main(void)
@@ -30,10 +32,14 @@ void createShaderProgram() {
 	)";
 
 	renderingProgram = new QProgram(vshaderSource, fshaderSource);
+	return renderingProgram->isValid();
 }
 
 int point_init(GLFWwindow* window) {
-	createShaderProgram();
+	if (!createShaderProgram()) {
+		cout << "Failed to create shader program" << endl;
+		return -1;
+	}
 
 	glGenVertexArrays(numVAOs, vao);
 	glBindVertexArray(vao[0]);
