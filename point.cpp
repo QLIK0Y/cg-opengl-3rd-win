@@ -1,23 +1,21 @@
 
 #include "QRunnable.h"
 #include "QProgram.h"
+
 #include <iostream>
+#include <memory>
 using namespace std;
 
 // VAO : Vertex Array Object
 #define numVAOs 1
 GLuint vao[numVAOs];
 
-QProgram *renderingProgram = nullptr;
-
-bool createShaderProgram() {
-	renderingProgram = new QProgram();
-
-	return renderingProgram->attachShaderFromFile("vertShader.glsl", "fragShader.glsl") && renderingProgram->isValid();
-}
+unique_ptr<QProgram> renderingProgram;
 
 int point_init(GLFWwindow* window) {
-	if (!createShaderProgram()) {
+	renderingProgram.reset(new QProgram());
+
+	if (!renderingProgram->attachShaderFromFile("vertShader.glsl", "fragShader.glsl")) {
 		cout << "Failed to create shader program" << endl;
 		return -1;
 	}
@@ -28,17 +26,12 @@ int point_init(GLFWwindow* window) {
 	return 0;
 }
 
-void destroyShaderProgram() {
-	delete renderingProgram;
-	renderingProgram = nullptr;
-}
-
 void point_deinit() {
-	destroyShaderProgram();
+	renderingProgram.release();
 }
 
 void point_display(GLFWwindow* window, double currentTime) {
-	if (renderingProgram != nullptr) {
+	if (renderingProgram->isValid()) {
 		renderingProgram->Use();
 	}
 
