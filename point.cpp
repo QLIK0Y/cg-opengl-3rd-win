@@ -11,7 +11,7 @@ using namespace std;
 GLuint vao[numVAOs];
 
 float x = 0.0f;
-float inc = 0.01f;
+//float inc = 0.01f;
 
 unique_ptr<QProgram> renderingProgram;
 
@@ -33,7 +33,7 @@ void point_deinit() {
 	renderingProgram.release();
 }
 
-void point_display(GLFWwindow* window, double currentTime) {
+void point_display(GLFWwindow* window, double deltaTime) {
 	//cout << "point_display: " << currentTime << endl;
 
 	if (renderingProgram->isValid()) {
@@ -44,15 +44,15 @@ void point_display(GLFWwindow* window, double currentTime) {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	x += inc;
-	if (x > 1.0f) {
-		x = 1.0f;
-		inc = -0.01f;
+	if (deltaTime < 0.25f) {
+		x = float(deltaTime * 4);
+	} else if (deltaTime < 0.25f) {
+		x = float(1.0 - (deltaTime * 4 - 1.0));
+	} else {
+		x = float( - (deltaTime * 2 - 1.0));
 	}
-	else if (x < -1.0f) {
-		x = -1.0f;
-		inc = 0.01f;
-	}
+
+	//cout << "deltaTime: " << deltaTime << ", x: " << x << endl;
 
 	GLuint offsetLoc = glGetUniformLocation(renderingProgram->id(), "offset");
 	glProgramUniform1f(renderingProgram->id(), offsetLoc, x);

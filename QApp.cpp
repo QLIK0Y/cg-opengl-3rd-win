@@ -60,10 +60,10 @@ int QApp::Run() {
 
 	while (!glfwWindowShouldClose(m_window)) {
 		double currentTime = glfwGetTime();
-		deltaTime += currentTime - lastTime;
+		deltaTime = currentTime - lastTime;
 		frameCount++;
 		
-		m_runnable.display(m_window, currentTime);
+		m_runnable.display(m_window, deltaTime);
 
 		if (deltaTime >= 1.0) {		
 			std::stringstream ss;
@@ -72,7 +72,6 @@ int QApp::Run() {
 			//cout << "FPS: " << ss.str() << endl;
 			glfwSetWindowTitle(m_window, ss.str().c_str());
 
-			deltaTime = 0.0;
 			frameCount = 0;
 			lastTime = currentTime;
 		}
