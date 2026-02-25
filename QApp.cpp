@@ -3,6 +3,7 @@
 #include "QApp.h"
 
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 int QApp::Init() {
@@ -28,6 +29,17 @@ int QApp::Init() {
 		return -1;
 	}
 
+	// 假设OpenGL上下文已经创建并激活
+
+	// 获取显卡的供应商名称 (例如: "NVIDIA Corporation", "AMD", "Intel")
+	const GLubyte* vendor = glGetString(GL_VENDOR);
+
+	// 获取具体的渲染器型号 (例如: "NVIDIA GeForce RTX 3080", "AMD Radeon Graphics")
+	const GLubyte* renderer = glGetString(GL_RENDERER);
+
+	// 打印或记录日志
+	cout << "current OpenGL render: " << vendor << " - " << renderer << endl;
+
 	if (m_runnable.init != nullptr) {
 		return m_runnable.init(m_window);
 	}
@@ -37,10 +49,32 @@ int QApp::Init() {
 
 
 int QApp::Run() {
-	while (!glfwWindowShouldClose(m_window)) {
 
-		if (m_runnable.display != nullptr) {
-			m_runnable.display(m_window, glfwGetTime());
+	if (m_runnable.display == nullptr) {
+		return -1;
+	}
+
+	double lastTime = glfwGetTime();
+	double deltaTime = 0.0;
+	int frameCount = 0;
+
+	while (!glfwWindowShouldClose(m_window)) {
+		double currentTime = glfwGetTime();
+		deltaTime += currentTime - lastTime;
+		frameCount++;
+		
+		m_runnable.display(m_window, currentTime);
+
+		if (deltaTime >= 1.0) {		
+			std::stringstream ss;
+			ss << m_runnable.title << " - [" << frameCount << " fps]";
+
+			//cout << "FPS: " << ss.str() << endl;
+			glfwSetWindowTitle(m_window, ss.str().c_str());
+
+			deltaTime = 0.0;
+			frameCount = 0;
+			lastTime = currentTime;
 		}
 
 		glfwSwapBuffers(m_window);
