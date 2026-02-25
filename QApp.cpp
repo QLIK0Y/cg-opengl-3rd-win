@@ -29,6 +29,17 @@ int QApp::Init() {
 		return -1;
 	}
 
+	// 假设OpenGL上下文已经创建并激活
+
+	// 获取显卡的供应商名称 (例如: "NVIDIA Corporation", "AMD", "Intel")
+	const GLubyte* vendor = glGetString(GL_VENDOR);
+
+	// 获取具体的渲染器型号 (例如: "NVIDIA GeForce RTX 3080", "AMD Radeon Graphics")
+	const GLubyte* renderer = glGetString(GL_RENDERER);
+
+	// 打印或记录日志
+	cout << "current OpenGL render: " << vendor << " - " << renderer << endl;
+
 	if (m_runnable.init != nullptr) {
 		return m_runnable.init(m_window);
 	}
