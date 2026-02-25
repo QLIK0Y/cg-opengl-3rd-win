@@ -10,6 +10,9 @@ using namespace std;
 #define numVAOs 1
 GLuint vao[numVAOs];
 
+float x = 0.0f;
+float inc = 0.01f;
+
 unique_ptr<QProgram> renderingProgram;
 
 int point_init(GLFWwindow* window) {
@@ -35,7 +38,24 @@ void point_display(GLFWwindow* window, double currentTime) {
 		renderingProgram->Use();
 	}
 
-	glPointSize(40.0f);
+	glClear(GL_DEPTH_BUFFER_BIT);
+	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+	glClear(GL_COLOR_BUFFER_BIT);
+
+	x += inc;
+	if (x > 1.0f) {
+		x = 1.0f;
+		inc = -0.01f;
+	}
+	else if (x < -1.0f) {
+		x = -1.0f;
+		inc = 0.01f;
+	}
+
+	GLuint offsetLoc = glGetUniformLocation(renderingProgram->id(), "offset");
+	glProgramUniform1f(renderingProgram->id(), offsetLoc, x);
+
+	//glPointSize(40.0f);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 

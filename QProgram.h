@@ -18,7 +18,7 @@ public:
 
 	bool isLinked() const;
 
-	//GLuint id() const { return m_program; }
+	GLuint id() const { return m_program; }
 
 	void outputProgramLog();
 
