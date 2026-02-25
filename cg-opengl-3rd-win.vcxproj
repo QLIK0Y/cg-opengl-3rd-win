@@ -150,7 +150,9 @@
     <ClInclude Include="QShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fragShader.glsl" />
     <None Include="README.md" />
+    <None Include="vertShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

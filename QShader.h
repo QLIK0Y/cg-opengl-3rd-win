@@ -8,11 +8,14 @@ using namespace std;
 class QShader {
 
 public:
-	QShader(GLenum type, const char* shaderSource);
+	QShader();
 
 	~QShader();
 
 public:
+	bool compile(GLenum type, const char* shaderSource);
+	bool compileFromFile(GLenum type, const char* filename);
+
 	GLuint id() const { return m_shader; }
 	bool isCompiled() const;
 

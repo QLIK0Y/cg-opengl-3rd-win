@@ -1,7 +1,18 @@
 
 #include "QShader.h"
+#include "QFile.h"
 
-QShader::QShader(GLenum type, const char* shaderSource) {
+QShader::QShader() {
+
+}
+
+QShader::~QShader() {
+	if (m_shader != 0) {
+		glDeleteShader(m_shader);
+	}
+}
+
+bool QShader::compile(GLenum type, const char* shaderSource) {
 	m_shader = glCreateShader(type);
 	glShaderSource(m_shader, 1, &shaderSource, nullptr);
 	glCompileShader(m_shader);
@@ -12,12 +23,19 @@ QShader::QShader(GLenum type, const char* shaderSource) {
 		QGLTool::checkGLError();
 		outputShaderLog();
 	}
+
+	return m_isCompiled;
 }
 
-QShader::~QShader() {
-	if (m_shader != 0) {
-		glDeleteShader(m_shader);
+bool QShader::compileFromFile(GLenum type, const char* filename) {
+	std::string shaderCode;
+
+	if (!QFile::readTextfile(filename, shaderCode)) {
+		cout << "Failed to open and read shader file: " << filename << endl;
+		return false;
 	}
+
+	return compile(type, shaderCode.c_str());
 }
 
 bool QShader::isCompiled() const {

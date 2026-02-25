@@ -4,15 +4,14 @@
 
 class QProgram {
 public:
-	//QProgram() = default;
-
-	QProgram(const char* vshaderSource, const char* fshaderSource);
-
-	QProgram(QShader& vertexShader, QShader& fragmentShader);
-
+	QProgram();
 	~QProgram();
 
 public:
+	bool attachShader(QShader& vertexShader, QShader& fragmentShader);
+	bool attachShaderSource(const char* vshaderSource, const char* fshaderSource);
+	bool attachShaderFromFile(const char* vshaderFile, const char* fshaderFile);
+
 	void Use() const;
 
 	bool isValid() const { return m_program != 0 && m_isValid; }
