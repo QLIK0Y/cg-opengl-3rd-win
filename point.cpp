@@ -34,6 +34,8 @@ void point_deinit() {
 }
 
 void point_display(GLFWwindow* window, double currentTime) {
+	//cout << "point_display: " << currentTime << endl;
+
 	if (renderingProgram->isValid()) {
 		renderingProgram->Use();
 	}

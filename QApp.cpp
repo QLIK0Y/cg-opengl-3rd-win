@@ -3,6 +3,7 @@
 #include "QApp.h"
 
 #include <iostream>
+#include <sstream>
 using namespace std;
 
 int QApp::Init() {
@@ -37,10 +38,32 @@ int QApp::Init() {
 
 
 int QApp::Run() {
-	while (!glfwWindowShouldClose(m_window)) {
 
-		if (m_runnable.display != nullptr) {
-			m_runnable.display(m_window, glfwGetTime());
+	if (m_runnable.display == nullptr) {
+		return -1;
+	}
+
+	double lastTime = glfwGetTime();
+	double deltaTime = 0.0;
+	int frameCount = 0;
+
+	while (!glfwWindowShouldClose(m_window)) {
+		double currentTime = glfwGetTime();
+		deltaTime += currentTime - lastTime;
+		frameCount++;
+		
+		m_runnable.display(m_window, currentTime);
+
+		if (deltaTime >= 1.0) {		
+			std::stringstream ss;
+			ss << m_runnable.title << " - [" << frameCount << " fps]";
+
+			//cout << "FPS: " << ss.str() << endl;
+			glfwSetWindowTitle(m_window, ss.str().c_str());
+
+			deltaTime = 0.0;
+			frameCount = 0;
+			lastTime = currentTime;
 		}
 
 		glfwSwapBuffers(m_window);
