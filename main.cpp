@@ -1,9 +1,6 @@
 
 #include "QApp.h"
 
-
-int point_main();
-
 QRunnable bg_color_runnable();
 QRunnable point_runnable();
 
