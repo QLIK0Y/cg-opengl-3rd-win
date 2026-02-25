@@ -11,28 +11,9 @@ GLuint vao[numVAOs];
 QProgram *renderingProgram = nullptr;
 
 bool createShaderProgram() {
-	const char* vshaderSource = R"(
-		#version 430
-		void main(void)
-		{
-			gl_Position = vec4(0.0, 0.0, 0.0, 1.0);
-		}
-	)";
-	const char* fshaderSource = R"(
-		#version 430
-		out vec4 color;
-		void main(void)
-		{
-			if (gl_FragCoord.x < 400.0) {
-				color = vec4(0.0, 1.0, 0.0, 1.0);
-			} else {
-				color = vec4(0.0, 0.0, 1.0, 1.0);
-			}
-		}
-	)";
+	renderingProgram = new QProgram();
 
-	renderingProgram = new QProgram(vshaderSource, fshaderSource);
-	return renderingProgram->isValid();
+	return renderingProgram->attachShaderFromFile("vertShader.glsl", "fragShader.glsl") && renderingProgram->isValid();
 }
 
 int point_init(GLFWwindow* window) {

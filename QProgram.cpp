@@ -1,20 +1,18 @@
 #include "QProgram.h"
 
 
-QProgram::QProgram(const char* vshaderSource, const char* fshaderSource) {
-	QShader vShader(GL_VERTEX_SHADER, vshaderSource);
-	QShader fShader(GL_FRAGMENT_SHADER, fshaderSource);
+QProgram::QProgram() {
+	m_program = glCreateProgram();
+}
 
-	bool isValid = vShader.isValid() && fShader.isValid();
-
-	if (isValid) {
-		this->QProgram::QProgram(vShader, fShader);
+QProgram::~QProgram() {
+	if (m_program != 0) {
+		glDeleteProgram(m_program);
 	}
 }
 
-QProgram::QProgram(QShader& vertexShader, QShader& fragmentShader) {
-	m_program = glCreateProgram();
 
+bool QProgram::attachShader(QShader& vertexShader, QShader& fragmentShader) {
 	glAttachShader(m_program, vertexShader.id());
 	glAttachShader(m_program, fragmentShader.id());
 
@@ -27,12 +25,33 @@ QProgram::QProgram(QShader& vertexShader, QShader& fragmentShader) {
 	}
 
 	m_isValid = true;
+
+	return m_isValid;
 }
 
-QProgram::~QProgram() {
-	if (m_program != 0) {
-		glDeleteProgram(m_program);
+bool QProgram::attachShaderSource(const char* vshaderSource, const char* fshaderSource) {
+	QShader vShader, fShader;
+
+	if ( vShader.compile(GL_VERTEX_SHADER, vshaderSource) 
+		&& fShader.compile(GL_FRAGMENT_SHADER, fshaderSource)
+		&& attachShader(vShader, fShader)) {
+		return true;
 	}
+
+	return false;
+
+}
+
+bool QProgram::attachShaderFromFile(const char* vshaderFile, const char* fshaderFile) {
+	QShader vShader, fShader;
+
+	if (vShader.compileFromFile(GL_VERTEX_SHADER, vshaderFile)
+		&& fShader.compileFromFile(GL_FRAGMENT_SHADER, fshaderFile)
+		&& attachShader(vShader, fShader)) {
+		return true;
+	}
+
+	return false;
 }
 
 
