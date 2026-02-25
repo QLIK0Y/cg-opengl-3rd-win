@@ -43,7 +43,7 @@ void point_display(GLFWwindow* window, double currentTime) {
 	}
 
 	glPointSize(40.0f);
-	glDrawArrays(GL_POINTS, 0, 1);
+	glDrawArrays(GL_TRIANGLES, 0, 3);
 }
 
 QRunnable point_runnable() {
