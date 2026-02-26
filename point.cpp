@@ -44,12 +44,10 @@ void point_display(GLFWwindow* window, double deltaTime) {
 	glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
 	glClear(GL_COLOR_BUFFER_BIT);
 
-	if (deltaTime < 0.25f) {
-		x = float(deltaTime * 4);
-	} else if (deltaTime < 0.25f) {
-		x = float(1.0 - (deltaTime * 4 - 1.0));
+	if (deltaTime <= 0.5f) {
+		x = float(deltaTime * 4 - 1.0);
 	} else {
-		x = float( - (deltaTime * 2 - 1.0));
+		x = float( -((deltaTime * 4) - 3.0));
 	}
 
 	//cout << "deltaTime: " << deltaTime << ", x: " << x << endl;
