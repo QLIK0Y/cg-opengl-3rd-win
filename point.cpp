@@ -1,3 +1,5 @@
+#define _USE_MATH_DEFINES
+#include <cmath>
 
 #include "QRunnable.h"
 #include "QProgram.h"
@@ -11,6 +13,7 @@ using namespace std;
 GLuint vao[numVAOs];
 
 float x = 0.0f;
+float rad = 0.0f;
 //float inc = 0.01f;
 
 unique_ptr<QProgram> renderingProgram;
@@ -49,11 +52,16 @@ void point_display(GLFWwindow* window, double deltaTime) {
 	} else {
 		x = float( -((deltaTime * 4) - 3.0));
 	}
+	rad = float(deltaTime * 2.0f * M_PI);
 
 	//cout << "deltaTime: " << deltaTime << ", x: " << x << endl;
 
 	GLuint offsetLoc = glGetUniformLocation(renderingProgram->id(), "offset");
 	glProgramUniform1f(renderingProgram->id(), offsetLoc, x);
+
+	GLuint radLoc = glGetUniformLocation(renderingProgram->id(), "rad");
+	glProgramUniform1f(renderingProgram->id(), radLoc, rad);
+
 
 	//glPointSize(40.0f);
 	glDrawArrays(GL_TRIANGLES, 0, 3);
