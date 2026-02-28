@@ -135,9 +135,9 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="bg-color.cpp" />
+    <ClCompile Include="demo-bg-color.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="point.cpp" />
+    <ClCompile Include="demo-point.cpp" />
     <ClCompile Include="QApp.cpp" />
     <ClCompile Include="QFile.cpp" />
     <ClCompile Include="QGLTool.cpp" />

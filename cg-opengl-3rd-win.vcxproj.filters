@@ -21,10 +21,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bg-color.cpp">
+    <ClCompile Include="demo-bg-color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="point.cpp">
+    <ClCompile Include="demo-point.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QApp.cpp">
