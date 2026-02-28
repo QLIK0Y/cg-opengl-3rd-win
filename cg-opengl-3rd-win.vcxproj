@@ -136,6 +136,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="demo-bg-color.cpp" />
+    <ClCompile Include="demo-cube.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="demo-point.cpp" />
     <ClCompile Include="QApp.cpp" />
@@ -153,8 +154,10 @@
     <ClInclude Include="QShader.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="fragShader-cube.glsl" />
     <None Include="fragShader.glsl" />
     <None Include="README.md" />
+    <None Include="vertShader-cube.glsl" />
     <None Include="vertShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

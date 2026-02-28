@@ -42,6 +42,9 @@
     <ClCompile Include="QFile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="demo-cube.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QApp.h">
@@ -68,6 +71,14 @@
     <None Include="vertShader.glsl">
       <Filter>shaders</Filter>
     </None>
-    <None Include="fragShader.glsl" />
+    <None Include="fragShader.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="vertShader-cube.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="fragShader-cube.glsl">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>
