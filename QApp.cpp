@@ -27,6 +27,8 @@ int QApp::Init() {
 		return -1;
 	}
 
+	glfwSwapInterval(1); // Enable vsync
+
 	const GLubyte* vendor = glGetString(GL_VENDOR);
 	const GLubyte* renderer = glGetString(GL_RENDERER);
 	cout << "current OpenGL render: " << vendor << " - " << renderer << endl;

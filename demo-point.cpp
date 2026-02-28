@@ -10,7 +10,7 @@ using namespace std;
 
 // VAO : Vertex Array Object
 #define numVAOs 1
-GLuint vao[numVAOs];
+static GLuint vao[numVAOs];
 
 float x = 0.0f;
 float rad = 0.0f;

@@ -21,10 +21,10 @@
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="bg-color.cpp">
+    <ClCompile Include="demo-bg-color.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="point.cpp">
+    <ClCompile Include="demo-point.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QApp.cpp">
@@ -40,6 +40,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="QFile.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="demo-cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -68,6 +71,14 @@
     <None Include="vertShader.glsl">
       <Filter>shaders</Filter>
     </None>
-    <None Include="fragShader.glsl" />
+    <None Include="fragShader.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="vertShader-cube.glsl">
+      <Filter>shaders</Filter>
+    </None>
+    <None Include="fragShader-cube.glsl">
+      <Filter>shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

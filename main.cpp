@@ -15,6 +15,7 @@
 
 QRunnable bg_color_runnable();
 QRunnable point_runnable();
+QRunnable cube_runnable();
 
 int demo_main(QRunnable runnable ) {
 	QApp app(runnable);
@@ -26,6 +27,7 @@ int demo_main(QRunnable runnable ) {
 
 int main() {
 	//return demo_main(bg_color_runnable());
-	return demo_main(point_runnable());
+	//return demo_main(point_runnable());
+	return demo_main(cube_runnable());
 }
 
