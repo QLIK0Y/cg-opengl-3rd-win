@@ -30,6 +30,7 @@ GLuint mvLoc, pLoc;
 int width, height;
 float aspect;
 glm::mat4 pMat, vMat, mMat, mvMat;
+glm::mat4 tMat, rMat;
 
 void setupVertices() {
 	// 36 vertices, 12 triangles, makes up  2x2x2 cube placed at origin
@@ -93,7 +94,16 @@ void cube_display(GLFWwindow* window, double deltaTime) {
 	// builld the view matrix, and model matrix, then calculate the model-view matrix
 	vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, -cameraY, -cameraZ));
 	mMat = glm::translate(glm::mat4(1.0f), glm::vec3(cubeLocX, cubeLocY, cubeLocZ));
-	mvMat = vMat * mMat;
+
+	tMat = glm::translate(glm::mat4(1.0f), glm::vec3(sin(0.35f *deltaTime)*2.0f, cos(0.52f *deltaTime) * 2.0f, sin(0.7f * deltaTime) * 2.0f));
+	// cast angle to float so template deduction matches glm::mat4 (float)
+	rMat = glm::rotate(glm::mat4(1.0f), 1.75f * static_cast<float>(deltaTime), glm::vec3(0.0f, 1.0f, 0.0f));
+	rMat = glm::rotate(rMat, 1.75f * static_cast<float>(deltaTime), glm::vec3(1.0f, 0.0f, 0.0f));
+	rMat = glm::rotate(rMat, 1.75f * static_cast<float>(deltaTime), glm::vec3(0.0f, 0.0f, 1.0f));
+
+	//mvMat = vMat * mMat;
+	mMat = tMat * rMat * mMat;	// combine the translation and rotation matrices with the model matrix
+
 
 	// copy the projection and model-view matrices to the corresponding uniform variables in the shader program
 	glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
