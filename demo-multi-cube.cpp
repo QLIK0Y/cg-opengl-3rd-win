@@ -26,12 +26,13 @@ static float cameraX, cameraY, cameraZ;
 static float cubeLocX, cubeLocY, cubeLocZ;
 
 // allocate variables used in display() function, so that they don't need to be allocated during rendering
-static GLuint mvLoc, pLoc;
+static GLuint vLoc, pLoc, tfLoc;
 static int width, height;
 static float aspect;
 static glm::mat4 pMat, vMat, mMat, mvMat;
+static glm::mat4 tMat, rMat;
 
-void setupVertices() {
+void multi_setupVertices() {
 	// 36 vertices, 12 triangles, makes up  2x2x2 cube placed at origin
 	float vertexPositions[108] = {
 		-1.0f, 1.0f, -1.0f, -1.0f, -1.0f, -1.0f, 1.0f, -1.0f, -1.0f,
@@ -57,32 +58,33 @@ void setupVertices() {
 }
 
 
-int cube_init(GLFWwindow* window) {
+int multi_cube_init(GLFWwindow* window) {
 	renderingProgram.reset(new QProgram());
 	if (!renderingProgram->attachShaderFromFile("vertShader-cube.glsl", "fragShader-cube.glsl")) {
 		cout << "Failed to create shader program" << endl;
 		return -1;
 	}
 
-	cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
-	cubeLocX = 0.0f; cubeLocY = -2.0f; cubeLocZ = 0.0f;	// shift down Y to reveal perpective
+	cameraX = 0.0f; cameraY = 0.0f; cameraZ = 420.0f;
+	cubeLocX = 0.0f; cubeLocY = -2.0f; cubeLocZ = 0.0f;	// shift down Y to reveall perpective distortion
 
-	setupVertices();
-	
+	multi_setupVertices();
+
 	return 0;
 }
 
-void cube_deinit() {
+void multi_cube_deinit() {
 	renderingProgram.release();
 }
 
-void cube_display(GLFWwindow* window, double currentTime, double deltaTime) {
+void multi_cube_display(GLFWwindow* window, double currentTime, double deltaTime) {
 	glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 	renderingProgram->Use();
 
 	// Get the locations of the uniform variables in the shader program
-	mvLoc = glGetUniformLocation(renderingProgram->id(), "mv_matrix");
+	vLoc = glGetUniformLocation(renderingProgram->id(), "v_matrix");
 	pLoc = glGetUniformLocation(renderingProgram->id(), "p_matrix");
+	tfLoc = glGetUniformLocation(renderingProgram->id(), "tf");
 
 	// build the perspective projection matrix
 	glfwGetFramebufferSize(window, &width, &height);
@@ -92,10 +94,10 @@ void cube_display(GLFWwindow* window, double currentTime, double deltaTime) {
 
 	// builld the view matrix, and model matrix, then calculate the model-view matrix
 	vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, -cameraY, -cameraZ));
-	mMat = glm::translate(glm::mat4(1.0f), glm::vec3(cubeLocX, cubeLocY, cubeLocZ));
+	//mMat = glm::translate(glm::mat4(1.0f), glm::vec3(cubeLocX, cubeLocY, cubeLocZ));
 
-	//float timeFactor = (float)currentTime;
-	
+	float timeFactor = (float)currentTime;
+
 	//tMat = glm::translate(glm::mat4(1.0f), 
 	//	glm::vec3(
 	//		sin(0.35f * currentTime) * 8.0f, 
@@ -111,14 +113,14 @@ void cube_display(GLFWwindow* window, double currentTime, double deltaTime) {
 
 	//
 	//mMat = tMat * rMat;	// combine the translation and rotation matrices with the model matrix
-	mvMat = vMat * mMat;
+	//mvMat = vMat * mMat;
 
 
 	// copy the projection and model-view matrices to the corresponding uniform variables in the shader program
-	glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
+	glUniformMatrix4fv(vLoc, 1, GL_FALSE, glm::value_ptr(vMat));
 	glUniformMatrix4fv(pLoc, 1, GL_FALSE, glm::value_ptr(pMat));
-	//glUniform1d(tfLoc, timeFactor);
-	
+	glUniform1d(tfLoc, timeFactor);
+
 	// associate the vertex data with the corresponding attribute variable in the shader program, and enable the generic vertex attribute array
 	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
 	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
@@ -130,6 +132,6 @@ void cube_display(GLFWwindow* window, double currentTime, double deltaTime) {
 	glDrawArraysInstanced(GL_TRIANGLES, 0, 36, 100000);
 }
 
-QRunnable cube_runnable() {
-	return QRunnable(cube_display, "Chapter4 - cube", cube_init, cube_deinit);
+QRunnable multi_cube_runnable() {
+	return QRunnable(multi_cube_display, "Chapter4 - cube", multi_cube_init, multi_cube_deinit);
 }
