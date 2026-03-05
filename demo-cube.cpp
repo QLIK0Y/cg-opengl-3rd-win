@@ -30,6 +30,7 @@ static GLuint mvLoc, pLoc;
 static int width, height;
 static float aspect;
 static glm::mat4 pMat, vMat, mMat, mvMat;
+static glm::mat4 tMat, rMat;
 
 void setupVertices() {
 	// 36 vertices, 12 triangles, makes up  2x2x2 cube placed at origin
@@ -64,7 +65,7 @@ int cube_init(GLFWwindow* window) {
 		return -1;
 	}
 
-	cameraX = 0.0f; cameraY = 0.0f; cameraZ = 8.0f;
+	cameraX = 0.0f; cameraY = 0.0f; cameraZ = 30.0f;
 	cubeLocX = 0.0f; cubeLocY = -2.0f; cubeLocZ = 0.0f;	// shift down Y to reveal perpective
 
 	setupVertices();
@@ -92,42 +93,46 @@ void cube_display(GLFWwindow* window, double currentTime, double deltaTime) {
 
 	// builld the view matrix, and model matrix, then calculate the model-view matrix
 	vMat = glm::translate(glm::mat4(1.0f), glm::vec3(-cameraX, -cameraY, -cameraZ));
-	mMat = glm::translate(glm::mat4(1.0f), glm::vec3(cubeLocX, cubeLocY, cubeLocZ));
+	//mMat = glm::translate(glm::mat4(1.0f), glm::vec3(cubeLocX, cubeLocY, cubeLocZ));
 
-	//float timeFactor = (float)currentTime;
-	
-	//tMat = glm::translate(glm::mat4(1.0f), 
-	//	glm::vec3(
-	//		sin(0.35f * currentTime) * 8.0f, 
-	//		cos(0.52f * currentTime) * 8.0f, 
-	//		sin(0.7f * currentTime) * 8.0f
-	//	)
-	//);
+	for (int i = 0; i < 24; i++) {
 
-	//// cast angle to float so template deduction matches glm::mat4 (float)
-	//rMat = glm::rotate(glm::mat4(1.0f), 1.75f * static_cast<float>(currentTime), glm::vec3(0.0f, 1.0f, 0.0f));
-	//rMat = glm::rotate(rMat, 1.75f * static_cast<float>(currentTime), glm::vec3(1.0f, 0.0f, 0.0f));
-	//rMat = glm::rotate(rMat, 1.75f * static_cast<float>(currentTime), glm::vec3(0.0f, 0.0f, 1.0f));
+		float timeFactor = (float)currentTime + i * 10.0;
 
-	//
-	//mMat = tMat * rMat;	// combine the translation and rotation matrices with the model matrix
-	mvMat = vMat * mMat;
+		float far = 8.0f;
+		tMat = glm::translate(glm::mat4(1.0f),
+			glm::vec3(
+				sin(0.35f * timeFactor) * far,
+				cos(0.52f * timeFactor) * far,
+				sin(0.7f * timeFactor) * far
+			)
+		);
+
+		// cast angle to float so template deduction matches glm::mat4 (float)
+		rMat = glm::rotate(glm::mat4(1.0f), 1.75f * static_cast<float>(timeFactor), glm::vec3(0.0f, 1.0f, 0.0f));
+		rMat = glm::rotate(rMat, 1.75f * static_cast<float>(timeFactor), glm::vec3(1.0f, 0.0f, 0.0f));
+		rMat = glm::rotate(rMat, 1.75f * static_cast<float>(timeFactor), glm::vec3(0.0f, 0.0f, 1.0f));
+
+		// combine the translation and rotation matrices with the model matrix	
+		mMat = tMat * rMat;	// combine the translation and rotation matrices with the model matrix
+		mvMat = vMat * mMat;
 
 
-	// copy the projection and model-view matrices to the corresponding uniform variables in the shader program
-	glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
-	glUniformMatrix4fv(pLoc, 1, GL_FALSE, glm::value_ptr(pMat));
-	//glUniform1d(tfLoc, timeFactor);
-	
-	// associate the vertex data with the corresponding attribute variable in the shader program, and enable the generic vertex attribute array
-	glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
-	glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
-	glEnableVertexAttribArray(0);
+		// copy the projection and model-view matrices to the corresponding uniform variables in the shader program
+		glUniformMatrix4fv(mvLoc, 1, GL_FALSE, glm::value_ptr(mvMat));
+		glUniformMatrix4fv(pLoc, 1, GL_FALSE, glm::value_ptr(pMat));
+		//glUniform1d(tfLoc, timeFactor);
 
-	// adjust OpenGL settings and draw the cube
-	glEnable(GL_DEPTH_TEST);
-	glDepthFunc(GL_LEQUAL);
-	glDrawArraysInstanced(GL_TRIANGLES, 0, 36, 100000);
+		// associate the vertex data with the corresponding attribute variable in the shader program, and enable the generic vertex attribute array
+		glBindBuffer(GL_ARRAY_BUFFER, vbo[0]);
+		glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, 0, (void*)0);
+		glEnableVertexAttribArray(0);
+
+		// adjust OpenGL settings and draw the cube
+		glEnable(GL_DEPTH_TEST);
+		glDepthFunc(GL_LEQUAL);
+		glDrawArrays(GL_TRIANGLES, 0, 36);
+	}
 }
 
 QRunnable cube_runnable() {
