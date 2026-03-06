@@ -48,6 +48,18 @@
     <ClCompile Include="demo-multi-cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="demo-multi-model.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QModel.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QBuffer.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="QCamera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="QApp.h">
@@ -68,6 +80,15 @@
     <ClInclude Include="QFile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="QModel.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QBuffer.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="QCamera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="README.md" />
@@ -81,12 +102,6 @@
       <Filter>shaders</Filter>
     </None>
     <None Include="fragShader-cube.glsl">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="fragShader-multi-cube.glsl">
-      <Filter>shaders</Filter>
-    </None>
-    <None Include="vertShader-multi-cube.glsl">
       <Filter>shaders</Filter>
     </None>
   </ItemGroup>
